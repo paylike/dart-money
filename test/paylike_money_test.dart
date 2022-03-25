@@ -1,4 +1,4 @@
-import 'package:paylike_money/dart_money.dart';
+import 'package:paylike_money/paylike_money.dart';
 import 'package:test/test.dart';
 
 void main() {

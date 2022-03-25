@@ -1,4 +1,4 @@
-import 'package:paylike_money/dart_money.dart';
+import 'package:paylike_money/paylike_money.dart';
 
 void main() {
   var eur = PaylikeCurrencies().byCode(CurrencyCode.EUR);
