@@ -1,0 +1,14 @@
+name: paylike_money
+description: Utility library for working with money in the Paylike ecosystem
+version: 1.0.0
+homepage: https://paylike.io
+
+environment:
+  sdk: '>=2.16.1 <3.0.0'
+
+dev_dependencies:
+  lints: ^1.0.0
+  test: ^1.16.0
+dependencies: 
+  equatable: ^2.0.3
+  paylike_currencies: ^1.0.6
