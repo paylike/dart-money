@@ -1,6 +1,20 @@
 import 'package:equatable/equatable.dart';
 import 'package:paylike_currencies/paylike_currencies.dart';
 
+/// Describes the options for string representation of [PaymentAmount]
+class PaymentAmountStringOptions {
+  /// Describes padding for the integers
+  final int padIntegers;
+
+  /// Describes padding for the fractions
+  final int padFractions;
+
+  /// Indicates to include currency or not
+  final bool currency;
+  const PaymentAmountStringOptions(
+      {this.padFractions = 0, this.padIntegers = 0, this.currency = true});
+}
+
 /// Describes an amount in a payment
 class PaymentAmount extends Equatable {
   /// Currency of the payment
@@ -16,6 +30,32 @@ class PaymentAmount extends Equatable {
 
   @override
   List<Object> get props => [currency, value, exponent];
+
+  /// Returns the amount you would see displayed (e.g. EUR 0.25)
+  String toRepresentationString(
+      {PaymentAmountStringOptions options =
+          const PaymentAmountStringOptions()}) {
+    String wholes, somes;
+    var negative = value < 0;
+    var integer = (negative ? -value : value).toString();
+    if (exponent <= 0) {
+      wholes = integer + ''.padRight(-exponent, '0');
+      somes = '';
+    } else if (integer.length <= exponent) {
+      wholes = '0';
+      somes = integer.padLeft(exponent, '0');
+    } else {
+      wholes = integer.substring(0, integer.length - exponent);
+      somes = integer.substring(integer.length - exponent);
+    }
+    var paddedWholes = wholes.padLeft(options.padIntegers, ' ');
+    var paddedSomes = somes.padRight(options.padFractions, '0');
+    var currencyString = options.currency ? currency.code + ' ' : '';
+    return (currencyString +
+        (negative ? '-' : '') +
+        paddedWholes +
+        (paddedSomes == '' ? '' : '.' + paddedSomes));
+  }
 
   /// Converts to a JSON Object
   Map<String, dynamic> toJSONBody() => {
