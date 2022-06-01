@@ -1,3 +1,7 @@
+## 1.0.2
+
+- Max safe integer is now an explicit value (Number.MAX_SAFE_INTEGER from JS)
+
 ## 1.0.1
 
 - Added `toRepresentationString()` to PaymentAmount so now it can be converted to a display string

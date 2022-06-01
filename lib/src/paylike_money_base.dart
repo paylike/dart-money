@@ -77,11 +77,11 @@ class UnsafeNumberException implements Exception {
 ///
 /// This is a clone implementation of the paylike JS library
 class Money {
-  static int maxInt =
-      (double.infinity is int) ? double.infinity as int : ~minInt;
-  static int minInt =
-      (double.infinity is int) ? -double.infinity as int : (-1 << 63);
-  static bool isInSafeRange(double n) {
+  /// Max safe integer in JS
+  static const int maxInt = 9007199254740991;
+
+  /// Returns if the number is in safe range
+  static bool isInSafeRange(num n) {
     return n <= maxInt && n >= -maxInt;
   }
 
