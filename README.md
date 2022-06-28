@@ -13,7 +13,7 @@ Currently this package only supports a fraction of our JavaScript library. We ma
 import 'package:paylike_money/dart_money.dart';
 
 void main() {
-  var eur = PaylikeCurrencies().byCode(CurrencyCode.EUR);
+  const eur = 'EUR';
   var amount = Money.fromDouble(eur, 12.5);
   print(amount.toJSONBody());
 }

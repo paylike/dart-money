@@ -1,3 +1,7 @@
+## 1.0.3
+
+- Removed Currencies package as a dependency
+
 ## 1.0.2
 
 - Max safe integer is now an explicit value (Number.MAX_SAFE_INTEGER from JS)

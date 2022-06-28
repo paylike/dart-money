@@ -3,8 +3,7 @@ import 'package:test/test.dart';
 
 void main() {
   group('A group of tests', () {
-    final currencies = PaylikeCurrencies();
-    final eur = currencies.byCode(CurrencyCode.EUR);
+    const eur = 'EUR';
     test('fromDouble', () {
       expect(Money.fromDouble(eur, 0),
           PaymentAmount(currency: eur, value: 0, exponent: 0));

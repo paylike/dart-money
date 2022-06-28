@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:paylike_currencies/paylike_currencies.dart';
 
 /// Describes the options for string representation of [PaymentAmount]
 class PaymentAmountStringOptions {
@@ -17,8 +16,8 @@ class PaymentAmountStringOptions {
 
 /// Describes an amount in a payment
 class PaymentAmount extends Equatable {
-  /// Currency of the payment
-  final PaylikeCurrency currency;
+  /// Currency of the payment, has to be 3 length string (e.g. EUR)
+  final String currency;
 
   /// Value of the payment
   final int value;
@@ -26,10 +25,11 @@ class PaymentAmount extends Equatable {
   /// Exponent of the payment
   final int exponent;
   const PaymentAmount(
-      {required this.currency, required this.value, required this.exponent});
+      {required this.currency, required this.value, required this.exponent})
+      : assert(currency.length == 3);
 
   @override
-  List<Object> get props => [currency, value, exponent];
+  List<Object> get props => [currency.toUpperCase(), value, exponent];
 
   /// Returns the amount you would see displayed (e.g. EUR 0.25)
   String toRepresentationString(
@@ -50,7 +50,7 @@ class PaymentAmount extends Equatable {
     }
     var paddedWholes = wholes.padLeft(options.padIntegers, ' ');
     var paddedSomes = somes.padRight(options.padFractions, '0');
-    var currencyString = options.currency ? currency.code + ' ' : '';
+    var currencyString = options.currency ? currency + ' ' : '';
     return (currencyString +
         (negative ? '-' : '') +
         paddedWholes +
@@ -59,7 +59,7 @@ class PaymentAmount extends Equatable {
 
   /// Converts to a JSON Object
   Map<String, dynamic> toJSONBody() => {
-        'currency': currency.code,
+        'currency': currency,
         'value': value,
         'exponent': exponent,
       };
@@ -86,7 +86,7 @@ class Money {
   }
 
   /// Converts a double value and a currency into an API compatible PaymentAmount
-  static PaymentAmount fromDouble(PaylikeCurrency currency, double n) {
+  static PaymentAmount fromDouble(String currency, double n) {
     if (!n.isFinite) {
       throw Exception('Non finite number $n');
     }
@@ -98,7 +98,7 @@ class Money {
     var somes = splitted.length > 1 ? splitted[1] : "";
     var value = int.parse(wholes + somes);
     return PaymentAmount(
-        currency: currency,
+        currency: currency.toUpperCase(),
         value: value,
         exponent: value == 0 ? 0 : somes.length);
   }

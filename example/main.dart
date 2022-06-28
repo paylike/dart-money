@@ -1,8 +1,7 @@
 import 'package:paylike_money/paylike_money.dart';
 
 void main() {
-  var eur = PaylikeCurrencies().byCode(CurrencyCode.EUR);
-  var amount = Money.fromDouble(eur, 12.5);
+  var amount = Money.fromDouble("EUR", 12.5);
   print(amount.toJSONBody());
   print(amount.toRepresentationString());
 }
